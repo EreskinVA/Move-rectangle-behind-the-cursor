@@ -20,9 +20,19 @@ const CGFloat viewSize = 200.f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-   // [self createUI];
+    // [self createUI];
     [self createABCView];
     
+    NSLog(@"View создалось");
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    
+    //Задания: 1) попробовать вызвать повторно viewDidLoad у контроллера
+    self.view = nil;
 }
 
 
@@ -41,16 +51,16 @@ const CGFloat viewSize = 200.f;
 
 - (void) createABCView {
     self.abcView = [[ABCView alloc]
-                        initWithFrame:CGRectMake(0, 0, viewSize, viewSize)];
+                    initWithFrame:CGRectMake(0, 0, viewSize, viewSize)];
     self.abcView.center = self.view.center;
     [self.view addSubview:self.abcView];
     
     
     
-//    UITapGestureRecognizer *tabRecognizer = [[UITapGestureRecognizer alloc] init];
-//    tabRecognizer.delaysTouchesBegan = YES;
-//    [tabRecognizer addTarget:self action: @selector(recognizerDidRecongize)];
-//    [abcView addGestureRecognizer:tabRecognizer];
+    //    UITapGestureRecognizer *tabRecognizer = [[UITapGestureRecognizer alloc] init];
+    //    tabRecognizer.delaysTouchesBegan = YES;
+    //    [tabRecognizer addTarget:self action: @selector(recognizerDidRecongize)];
+    //    [abcView addGestureRecognizer:tabRecognizer];
     
     UISwipeGestureRecognizer *swipeRecognizer =
     [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(recognizerDidRecongize:)];
@@ -58,7 +68,7 @@ const CGFloat viewSize = 200.f;
     swipeRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
     [self.abcView addGestureRecognizer:swipeRecognizer];
     
-   
+    
     
     
 }
@@ -66,7 +76,7 @@ const CGFloat viewSize = 200.f;
 #pragma mark - UIResponder
 
 -(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-
+    
     CGPoint touchPoint = [self touchPointInView:touches];
     NSLog(@"Нажатие началось %f %f",touchPoint.x,touchPoint.y);
     self.abcView.frame = CGRectMake(touchPoint.x,
@@ -79,9 +89,9 @@ const CGFloat viewSize = 200.f;
     CGPoint touchPoint = [self touchPointInView:touches];
     NSLog(@"Нажатие продолжается %f %f",touchPoint.x,touchPoint.y);
     self.abcView.frame = CGRectMake(touchPoint.x,
-                                     touchPoint.y,
-                                     self.abcView.frame.size.width,
-                                     self.abcView.frame.size.height);
+                                    touchPoint.y,
+                                    self.abcView.frame.size.width,
+                                    self.abcView.frame.size.height);
     [self.view layoutIfNeeded];
 };
 -(void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
